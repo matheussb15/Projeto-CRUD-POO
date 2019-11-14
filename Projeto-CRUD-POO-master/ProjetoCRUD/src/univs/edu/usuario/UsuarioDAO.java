@@ -1,6 +1,6 @@
 package univs.edu.usuario;
 
-
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -18,7 +18,9 @@ public class UsuarioDAO {
         transacao = sessao.beginTransaction();
         if(usuario.getIdUsuario() == 0){
             sessao.save(usuario);
-        }else{ editar(usuario);}
+        }else{
+            editar(usuario);
+        }
         transacao.commit();
         sessao.close();
     }
@@ -52,28 +54,29 @@ public class UsuarioDAO {
         sessao.close();
         return usuario;
     }
-      
+    
     public Usuario autenticarUsuario(String login, String senha){
         sessao = HibernateUtil.
                 getSessionFactory().openSession();
         transacao = sessao.beginTransaction();
         Usuario usuario = (Usuario) sessao.
                 createCriteria(Usuario.class)
-                .add(Restrictions.eq("login:", login))
-                .add(Restrictions.eq("senha:", senha))
+                .add(Restrictions.eq("login", login))
+                .add(Restrictions.eq("senha", senha))
                 .uniqueResult();
         sessao.close();
         
-        return usuario != null ? usuario:null;
+        return usuario != null ? usuario : null;
     }
     
     public List<Usuario> listarUsuarios(){
         sessao = HibernateUtil.
                 getSessionFactory().openSession();
         transacao = sessao.beginTransaction();
-       List<Usuario> usuarios = sessao.
+        List<Usuario> usuarios = sessao.
                 createCriteria(Usuario.class).list();
         sessao.close();
         return usuarios;
     }
+    
 }

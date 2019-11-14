@@ -17,6 +17,7 @@
         <mapping class="univs.edu.usuario.Usuario"/>
         <mapping class="univs.edu.funcionario.Funcionario"/>
         
+        
     </session-factory>
 </hibernate-configuration>
 
